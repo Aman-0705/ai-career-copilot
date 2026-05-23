@@ -4,6 +4,9 @@ import FeatureCards from "../components/FeatureCards";
 import StatsSection from "../components/StatsSection";
 import Button from "../components/Button";
 import Testimonials from "../components/Testimonials";
+// import BackendTest from "../components/BackendTest";
+// import GreetingsForm from "../components/GreetingsForm";
+import ApplicationTracker from "../components/ApplicationTracker";
 
 const Home = () => {
     return(
@@ -21,7 +24,7 @@ transition={{
     repeat:Infinity,
     ease:easeInOut,
 }}
- className="absolute top-40 left-10 w-[500px] h-[500px] bg-purple-500 rounded-full blur-[150px] opacity-40 -z-0" />
+ className="pointer-events-none absolute top-40 left-10 w-[500px] h-[500px] bg-purple-500 rounded-full blur-[150px] opacity-40 -z-0" />
 
 <motion.div 
 animate={{
@@ -33,7 +36,7 @@ transition={{
     repeat:Infinity,
     ease: easeInOut,
 }}
-className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-blue-500 rounded-full blur-[150px] opacity-40 -z-0" />
+className="pointer-events-none absolute bottom-20 right-10 w-[500px] h-[500px] bg-blue-500 rounded-full blur-[150px] opacity-40 -z-0" />
    <motion.section 
    initial={{
     opacity:0,
@@ -73,6 +76,8 @@ className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-blue-500 rounded-f
             <FeatureCards />
             <StatsSection />
             <Testimonials />
+            <ApplicationTracker />
+            
         </div>
     );
 };
