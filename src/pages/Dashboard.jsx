@@ -1,7 +1,12 @@
 import DashboardLayout from "../layouts/DashboardLayout";
 import { Link } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import { fetchApplications } from "../services/applicationService";
+import { div } from "framer-motion/client";
+import useApplications from "../hooks/useApplications";
 
-const Dashbord = () => {
+const Dashboard = () => {
+    const applications = useApplications();
     return (
         <DashboardLayout>
             <h1 className="text-5xl font-bold mb-10 text-center p-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Dashboard</h1>
@@ -11,7 +16,7 @@ const Dashbord = () => {
                         Applications
                     </h2>
                     <p className="text-5xl font-bold mt-6 text-purple-400">
-                        12
+                        {applications.length}
                     </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
@@ -96,8 +101,22 @@ const Dashbord = () => {
                 </div>
 
             </div>
+            <h1 className="text-4xl font-semibold mt-20 mb-10 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Recent Applications
+            </h1>
+            <div className="space-y-4 text-center">
+                {applications.slice(0,3).map((app)=>{
+                    return(
+                    <div key = {app.id}
+                    className="bg-white/5 border border-white/10 rounded-3xl p-6 ">
+                        <h3 className="text-2xl font-semibold">{app.company}</h3>
+                        <p className="text-gray-400 mt-3">{app.role}</p>
+                        <p className="text-purpble-400 mt-3">{app.status}</p>
+                    </div>)
+                })}
+            </div>
         </DashboardLayout>
     );
 };
 
-export default Dashbord;
+export default Dashboard;

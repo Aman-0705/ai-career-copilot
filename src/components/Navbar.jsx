@@ -39,6 +39,13 @@ const Navbar = () => {
                     >
                         Login
                     </Link>
+
+                    <Link
+                        to="/signup"
+                        className="hover:text-purple-400 transition"
+                    >
+                        Signup
+                    </Link>
                     <Button text="Get Started" />
                 </div>
                 <button className="md:hidden text-3xl hover:scale-105" onClick={()=> SetOpenMenu(!openMenu)}>

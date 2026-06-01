@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 
-const Login = () => {
+const Signup = () => {
 
     return (
 
@@ -14,11 +14,17 @@ const Login = () => {
 
                     <h1 className="text-4xl font-bold mb-8 text-center">
 
-                        Welcome Back
+                        Create Account
 
                     </h1>
 
                     <div className="space-y-6">
+
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            className="w-full px-4 py-4 rounded-xl bg-black border border-gray-700"
+                        />
 
                         <input
                             type="email"
@@ -34,7 +40,7 @@ const Login = () => {
 
                         <button className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 font-semibold text-lg">
 
-                            Login
+                            Signup
 
                         </button>
 
@@ -50,4 +56,4 @@ const Login = () => {
 
 };
 
-export default Login;
+export default Signup;
