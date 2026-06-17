@@ -1,6 +1,28 @@
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 
 const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleLogin = async () => {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        console.log(data);
+
+        if(data.token) {
+            localStorage.setItem("token",data.token);
+        };
+
+        setMessage(data.message);
+    }
 
     return (
 
@@ -24,19 +46,30 @@ const Login = () => {
                             type="email"
                             placeholder="Email"
                             className="w-full px-4 py-4 rounded-xl bg-black border border-gray-700"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
 
                         <input
                             type="password"
                             placeholder="Password"
                             className="w-full px-4 py-4 rounded-xl bg-black border border-gray-700"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
 
-                        <button className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 font-semibold text-lg">
+                        <button className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 font-semibold text-lg" onClick={handleLogin}>
 
                             Login
 
                         </button>
+                        {
+                            message && (
+                                <p className="text-center mt-4 text-purple-400">
+                                    {message}
+                                </p>
+                            )
+                        }
 
                     </div>
 

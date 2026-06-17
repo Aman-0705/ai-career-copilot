@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
-
+    const navigate = useNavigate();
     return (
-
+        
         <section className="min-h-screen flex items-center justify-center text-center px-6">
 
             <div>
@@ -41,7 +42,7 @@ const HeroSection = () => {
                     className="mt-10"
                 >
 
-                    <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-xl font-semibold hover:scale-105 transition">
+                    <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-xl font-semibold hover:scale-105 transition" onClick={()=> navigate('/signup')} >
 
                         Get Started
 
