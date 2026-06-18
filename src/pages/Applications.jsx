@@ -51,6 +51,7 @@ const Applications = () => {
                 </div>
 
             </div>
+            
             <ApplicationTracker />
         </DashboardLayout>
     );

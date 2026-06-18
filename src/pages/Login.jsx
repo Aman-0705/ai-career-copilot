@@ -1,10 +1,12 @@
 import Navbar from "../components/Navbar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const response = await fetch("http://localhost:5000/api/auth/login", {
@@ -17,12 +19,22 @@ const Login = () => {
         const data = await response.json();
         console.log(data);
 
-        if(data.token) {
-            localStorage.setItem("token",data.token);
-        };
+        if (data.token) {
 
-        setMessage(data.message);
-    }
+            localStorage.setItem(
+                "token",
+                data.token
+            );
+
+            navigate("/dashboard");
+
+        } else {
+
+            setMessage(data.message);
+
+        }
+
+    };
 
     return (
 

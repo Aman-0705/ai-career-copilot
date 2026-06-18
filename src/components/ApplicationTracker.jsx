@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchApplications } from "../services/applicationService";
 
 const ApplicationTracker = () => {
 
@@ -6,37 +7,22 @@ const ApplicationTracker = () => {
     const [role, setRole] = useState("");
     const [applications, setApplications] = useState([]);
 
-    const fetchApplications = async () => {
+    const loadApplications = async () => {
 
-        try {
+        const data = await fetchApplications();
 
-            const response = await fetch(
-                "http://localhost:5000/api/applications"
-            );
-
-            const data = await response.json();
-
-            console.log("GET DATA:", data);
-
-            setApplications(data);
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
+        setApplications(data);
 
     };
 
     useEffect(() => {
 
-        fetchApplications();
+        loadApplications();
 
     }, []);
 
     const handleAddApplication = async () => {
-
-        console.log("BUTTON CLICKED");
+        const token = localStorage.getItem("token");
 
         try {
 
@@ -47,6 +33,7 @@ const ApplicationTracker = () => {
 
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
                     },
 
                     body: JSON.stringify({
@@ -60,7 +47,7 @@ const ApplicationTracker = () => {
 
             console.log("POST DATA:", data);
 
-            await fetchApplications();
+            await loadApplications();
 
             setCompany("");
             setRole("");
@@ -74,25 +61,41 @@ const ApplicationTracker = () => {
     };
 
     const handleDeleteApplication = async (id) => {
-        await fetch(`http://localhost:5000/api/applications/${id}`,
-            { method: 'DELETE', }
-        );
 
-        await fetchApplications();
-    };
+        const token = localStorage.getItem("token");
 
-    const handleUpdateStatus = async (id, status) => {
-        await fetch(`http://localhost:5000/api/applications/${id}`,
+        await fetch(
+            `http://localhost:5000/api/applications/${id}`,
             {
-                method: "PUT",
-                headers: { "Content-Type": "application/json", },
-                body: JSON.stringify({
-                    status,
-                }),
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
         );
 
-        await fetchApplications();
+        await loadApplications();
+    };
+
+    const handleUpdateStatus = async (id, status) => {
+
+        const token = localStorage.getItem("token");
+
+        await fetch(
+            `http://localhost:5000/api/applications/${id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    status
+                })
+            }
+        );
+
+        await loadApplications();
     };
 
     return (

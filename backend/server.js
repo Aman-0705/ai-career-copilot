@@ -9,6 +9,7 @@ const PORT = 5000;
 const applicationRoutes = require("./routes/applicationRoutes");
 const authRoutes = require("./routes/authRoutes");
 const pool = require("./config/database");
+const authMiddleware = require("./middleware/authMiddleware");
 
 app.use(cors());
 

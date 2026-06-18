@@ -1,6 +1,7 @@
 import { secondsToMilliseconds } from "framer-motion";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Signup = () => {
@@ -8,7 +9,7 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-
+    const navigate = useNavigate();
     const handleSignup = async () => {
         // console.log("Signup button clicked");
         const response = await fetch("http://localhost:5000/api/auth/signup", {
@@ -20,6 +21,7 @@ const Signup = () => {
         });
         const data = await response.json();
         setMessage(data.message);
+        navigate("/login");
     };
 
     return (
