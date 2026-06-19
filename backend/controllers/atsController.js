@@ -1,5 +1,8 @@
 const fs = require("fs");
 const pdfParse = require("pdf-parse");
+const {
+    analyzeResume,
+} = require("../services/groqService");
 
 const uploadResume = async (req, res) => {
 
@@ -17,48 +20,39 @@ const uploadResume = async (req, res) => {
         const jobDescription =
             req.body.jobDescription.toLowerCase();
 
-        const jdWords =
-            jobDescription
-                .replace(/[^\w\s]/g, "")
-                .split(/\s+/)
-                .filter(word => word.length > 3);
-
-        const uniqueKeywords =
-            [...new Set(jdWords)];
-
-        const matchedKeywords =
-            uniqueKeywords.filter(keyword =>
-                resumeText.includes(keyword)
+        const aiResult =
+            await analyzeResume(
+                resumeText,
+                jobDescription
             );
 
-        const missingKeywords =
-            uniqueKeywords.filter(keyword =>
-                !resumeText.includes(keyword)
-            );
+        const cleanedResult = aiResult
+            .replace(/```json/g, "")
+            .replace(/```/g, "")
+            .trim();
 
-        const matchScore =
-            Math.round(
-                (matchedKeywords.length /
-                    uniqueKeywords.length) * 100
-            );
+        const parsedResult =
+            JSON.parse(cleanedResult);
 
-        console.log({
-            score: matchScore,
-            matchedKeywords,
-            missingKeywords
-        });
         res.json({
             message:
                 "Resume analyzed successfully",
 
-            score: matchScore,
+            score:
+                parsedResult.matchScore,
 
-            matchedKeywords,
+            strengths:
+                parsedResult.strengths,
 
-            missingKeywords,
+            missingSkills:
+                parsedResult.missingSkills,
 
-            resumeText: pdfData.text
+            suggestions:
+                parsedResult.suggestions,
+
+            resumeText
         });
+
 
     } catch (error) {
 

@@ -7,8 +7,9 @@ const ATSAnalyzer = () => {
     // const [resumeText, setResumeText] = useState("");
     const [jobDescription, setJobDescription] = useState("");
     const [score, setScore] = useState(null);
-    const [matchedKeywords, setMatchedKeywords] = useState([]);
-    const [missingKeywords, setMissingKeywords] = useState([]);
+    const [strengths, setStrengths] = useState([]);
+    const [missingSkills, setMissingSkills] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
     const handleAnalyze = async () => {
         if (!resume) {
             setMessage("Please select a resume");
@@ -32,12 +33,16 @@ const ATSAnalyzer = () => {
             setMessage(data.message);
             setScore(data.score);
 
-            setMatchedKeywords(
-                data.matchedKeywords || []
+            setStrengths(
+                data.strengths || []
             );
 
-            setMissingKeywords(
-                data.missingKeywords || []
+            setMissingSkills(
+                data.missingSkills || []
+            );
+
+            setSuggestions(
+                data.suggestions || []
             );
             // setResumeText(data.text);
             console.log(data);
@@ -100,7 +105,7 @@ const ATSAnalyzer = () => {
                     )
                 }
                 {
-                    matchedKeywords.length > 0 && (
+                    strengths.length > 0 && (
                         <div className="mt-8 bg-white/5 border border-green-500 rounded-3xl p-8">
 
                             <h3 className="text-2xl font-bold mb-4 text-green-400">
@@ -108,7 +113,7 @@ const ATSAnalyzer = () => {
                             </h3>
 
                             <ul>
-                                {matchedKeywords.map((skill) => (
+                                {strengths.map((skill) => (
                                     <li key={skill}>
                                         ✓ {skill}
                                     </li>
@@ -119,20 +124,39 @@ const ATSAnalyzer = () => {
                     )
                 }
                 {
-                    missingKeywords.length > 0 && (
+                    missingSkills.length > 0 && (
                         <div className="mt-8 bg-white/5 border border-red-500 rounded-3xl p-8">
 
                             <h3 className="text-2xl font-bold mb-4 text-red-400">
-                                Missing Keywords
+                                Missing Skills
                             </h3>
 
                             <ul>
-                                {missingKeywords.map((skill) => (
+                                {missingSkills.map((skill) => (
                                     <li key={skill}>
                                         ✗ {skill}
                                     </li>
                                 ))}
                             </ul>
+
+                        </div>
+                    )
+                }
+                {
+                    suggestions.length > 0 && (
+                        <div className="mt-8 bg-white/5 border border-blue-500 rounded-3xl p-8">
+
+                            <h3 className="text-2xl font-bold mb-4 text-blue-400">
+                                Suggestions
+                            </h3>
+
+                            {
+                                suggestions.map((item) => (
+                                    <p key={item}>
+                                        • {item}
+                                    </p>
+                                ))
+                            }
 
                         </div>
                     )
