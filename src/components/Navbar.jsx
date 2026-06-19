@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+// hidden md:flex gap-8 text-lg text-center
 const Navbar = () => {
     const [openMenu, SetOpenMenu] = useState(false);
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Navbar = () => {
                 <h1 className="text-3xl font-bold tracking-wide cursor-pointer bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
                     AI Career Copilot
                 </h1>
-                <div className="hidden md:flex gap-8 text-lg text-center item-center">
+                <div className="hidden md:flex gap-8 text-lg text-center items-center">
                     <div className="hidden md:flex gap-8 text-lg text-center">
 
                         <Link to="/" className="hover:text-purple-400 transition">
@@ -39,6 +40,13 @@ const Navbar = () => {
                                     className="hover:text-purple-400 transition"
                                 >
                                     Applications
+                                </Link>
+
+                                <Link
+                                    to="/ats-analyzer"
+                                    className="hover:text-purple-400 transition"
+                                >
+                                    Resume Analyzer
                                 </Link>
 
                                 <button
@@ -98,7 +106,7 @@ const Navbar = () => {
                                     duration: 0.3,
                                 }}
                                 className="absolute top-24 left-6 right-6 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col gap-6 text-lg md:hidden">
-                                <div className="hidden md:flex gap-8 text-lg text-center">
+                                <div className="flex flex-col gap-6">
 
                                     <Link to="/" className="hover:text-purple-400 transition">
                                         Home
@@ -118,6 +126,13 @@ const Navbar = () => {
                                                 className="hover:text-purple-400 transition"
                                             >
                                                 Applications
+                                            </Link>
+
+                                            <Link
+                                                to="/ats-analyzer"
+                                                className="hover:text-purple-400 transition"
+                                            >
+                                                Resume Analyzer
                                             </Link>
 
                                             <button
