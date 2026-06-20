@@ -3,7 +3,8 @@ const multer = require("multer");
 
 const router = express.Router();
 
-const {uploadResume} = require("../controllers/atsController");
+const {uploadResume, getATSHistory} = require("../controllers/atsController");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -26,8 +27,15 @@ const upload = multer({storage});       // Middleware to handle file uploads
 
 router.post(
     "/upload",
+    authMiddleware,
     upload.single("resume"),
     uploadResume
 );
+
+router.get(
+    "/history",
+    authMiddleware,
+    getATSHistory
+)
 
 module.exports = router;

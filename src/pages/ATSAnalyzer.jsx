@@ -10,26 +10,49 @@ const ATSAnalyzer = () => {
     const [strengths, setStrengths] = useState([]);
     const [missingSkills, setMissingSkills] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
+    const [loading, setLoading] = useState(false);
     const handleAnalyze = async () => {
+
         if (!resume) {
             setMessage("Please select a resume");
             return;
         }
+
         if (!jobDescription.trim()) {
-            setMessage(
-                "Please paste a Job Description"
-            );
+            setMessage("Please paste a Job Description");
             return;
         }
+
+        // Clear previous results
+        setMessage("");
+        setScore(null);
+        setStrengths([]);
+        setMissingSkills([]);
+        setSuggestions([]);
+
         const formData = new FormData();
+        const token = localStorage.getItem("token");
+
         formData.append("resume", resume);
         formData.append("jobDescription", jobDescription);
+
+        setLoading(true);
+
         try {
-            const response = await fetch("http://localhost:5000/api/ats/upload", {
-                method: "POST",
-                body: formData
-            });
+
+            const response = await fetch(
+                "http://localhost:5000/api/ats/upload",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: formData
+                }
+            );
+
             const data = await response.json();
+
             setMessage(data.message);
             setScore(data.score);
 
@@ -44,16 +67,24 @@ const ATSAnalyzer = () => {
             setSuggestions(
                 data.suggestions || []
             );
-            // setResumeText(data.text);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
 
-    }
+        } catch (error) {
+
+            console.log(error);
+
+            setMessage(
+                "Failed to analyze resume. Please try again."
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    };
     return (
         <DashboardLayout>
-            <h1 className="text-5xl font-bold text-center mb-10 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold text-center mb-10 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent pb-4">
                 ATS Resume Analyzer
             </h1>
 
@@ -78,9 +109,18 @@ const ATSAnalyzer = () => {
 
                 <button
                     onClick={handleAnalyze}
-                    className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 font-semibold"
+                    disabled={loading}
+                    className={`w-full mt-6 py-4 rounded-xl font-semibold transition
+    ${loading
+                            ? "bg-gray-700 cursor-not-allowed"
+                            : "bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-[1.02]"
+                        }`}
                 >
-                    Analyze Resume
+                    {
+                        loading
+                            ? "Analyzing..."
+                            : "Analyze Resume"
+                    }
                 </button>
                 {
                     message && (

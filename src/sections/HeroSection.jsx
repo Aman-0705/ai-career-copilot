@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
     const navigate = useNavigate();
+    const isLoggedIn = !!localStorage.getItem("token");
     return (
         
         <section className="min-h-screen flex items-center justify-center text-center px-6">
@@ -42,11 +43,15 @@ const HeroSection = () => {
                     className="mt-10"
                 >
 
-                    <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-xl font-semibold hover:scale-105 transition" onClick={()=> navigate('/signup')} >
-
-                        Get Started
-
-                    </button>
+                    {isLoggedIn ? (
+                        <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-xl font-semibold hover:scale-105 transition" onClick={()=> navigate('/dashboard')} >
+                            Go to Dashboard
+                        </button>
+                    ) : (
+                        <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-xl font-semibold hover:scale-105 transition" onClick={()=> navigate('/signup')} >
+                            Get Started
+                        </button>
+                    )}
 
                 </motion.div>
 

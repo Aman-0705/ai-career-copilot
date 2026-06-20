@@ -11,6 +11,7 @@ const authRoutes = require("./routes/authRoutes");
 const pool = require("./config/database");
 const authMiddleware = require("./middleware/authMiddleware");
 const atsRoutes = require("./routes/atsRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 app.use(cors());
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api", applicationRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/ats",atsRoutes);
+app.use("/api/dashboard",dashboardRoutes);
 
 pool.query("SELECT NOW()", (err, res) => {
 

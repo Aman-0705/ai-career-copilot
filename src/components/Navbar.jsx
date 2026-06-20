@@ -49,6 +49,13 @@ const Navbar = () => {
                                     Resume Analyzer
                                 </Link>
 
+                                <Link
+                                    to="/ats-history"
+                                    className="hover:text-purple-400 transition"
+                                >
+                                    ATS History
+                                </Link>
+
                                 <button
                                     onClick={handleLogout}
                                     className="hover:text-red-400 transition text-red-400 border border-red-400 px-4 py-2 rounded-2xl hover:bg-red-200"
@@ -133,6 +140,13 @@ const Navbar = () => {
                                                 className="hover:text-purple-400 transition"
                                             >
                                                 Resume Analyzer
+                                            </Link>
+
+                                            <Link
+                                                to="/ats-history"
+                                                className="hover:text-purple-400 transition"
+                                            >
+                                                ATS History
                                             </Link>
 
                                             <button

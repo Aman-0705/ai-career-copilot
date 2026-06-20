@@ -4,9 +4,16 @@ import { Link } from "react-router-dom";
 // import { fetchApplications } from "../services/applicationService";
 import { div } from "framer-motion/client";
 import useApplications from "../hooks/useApplications";
+import useDashboardStats from "../hooks/useDashboardStats";
+import ATSTrendChart from "../components/ATSTrendChart";
+import useATSHistory from "../hooks/useATSHistory";
+import RecentATSReports from "../components/RecentATSReports";
+
 
 const Dashboard = () => {
     const applications = useApplications();
+    const stats = useDashboardStats();
+    const atsReports = useATSHistory();
     return (
         <DashboardLayout>
             <h1 className="text-5xl font-bold mb-10 text-center p-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Dashboard</h1>
@@ -16,7 +23,11 @@ const Dashboard = () => {
                         Applications
                     </h2>
                     <p className="text-5xl font-bold mt-6 text-purple-400">
-                        {applications.length}
+                        {
+                            stats
+                                ? stats.totalApplications
+                                : 0
+                        }
                     </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
@@ -26,7 +37,11 @@ const Dashboard = () => {
                     </h2>
 
                     <p className="text-5xl font-bold mt-6 text-blue-400">
-                        5
+                        {
+                            stats
+                                ? stats.interviews
+                                : 0
+                        }
                     </p>
 
                 </div>
@@ -38,10 +53,44 @@ const Dashboard = () => {
                     </h2>
 
                     <p className="text-5xl font-bold mt-6 text-green-400">
-                        2
+                        {
+                            stats
+                                ? stats.offers
+                                : 0
+                        }
                     </p>
 
                 </div>
+
+                <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+
+                    <h2 className="text-2xl font-semibold">
+                        Latest ATS Score
+                    </h2>
+
+                    <p className="text-5xl font-bold mt-6 text-yellow-400">
+                        {
+                            stats
+                                ? `${stats.latestATS}%`
+                                : "0%"
+                        }
+                    </p>
+
+                </div>
+            </div>
+            <div className="mt-12">
+
+                <ATSTrendChart
+                    reports={atsReports}
+                />
+
+            </div>
+            <div className="mt-10">
+
+                <RecentATSReports
+                    reports={atsReports}
+                />
+
             </div>
             <h2 className="text-4xl font-bold mt-20 mb-10 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                 Quick Actions
@@ -63,8 +112,22 @@ const Dashboard = () => {
                     </p>
 
                 </Link>
+                <Link
+                    to="/ats-analyzer"
+                    className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:scale-[1.02] transition"
+                >
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-8 opacity-70">
+                    <h3 className="text-3xl font-semibold">
+                         Resume Analyzer
+                    </h3>
+
+                    <p className="text-gray-400 mt-4">
+                        AI-powered resume insights and ATS match score analysis.
+                    </p>
+
+                </Link>
+
+                {/* <div className="bg-white/5 border border-white/10 rounded-3xl p-8 opacity-70">
 
                     <h3 className="text-3xl font-semibold">
                         Resume Analyzer
@@ -74,7 +137,7 @@ const Dashboard = () => {
                         AI-powered resume insights coming soon.
                     </p>
 
-                </div>
+                </div> */}
 
                 <div className="bg-white/5 border border-white/10 rounded-3xl p-8 opacity-70">
 
@@ -104,15 +167,16 @@ const Dashboard = () => {
             <h1 className="text-4xl font-semibold mt-20 mb-10 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                 Recent Applications
             </h1>
+            
             <div className="space-y-4 text-center">
-                {applications.slice(0,3).map((app)=>{
-                    return(
-                    <div key = {app.id}
-                    className="bg-white/5 border border-white/10 rounded-3xl p-6 ">
-                        <h3 className="text-2xl font-semibold">{app.company}</h3>
-                        <p className="text-gray-400 mt-3">{app.role}</p>
-                        <p className="text-purpble-400 mt-3">{app.status}</p>
-                    </div>)
+                {applications.slice(0, 3).map((app) => {
+                    return (
+                        <div key={app.id}
+                            className="bg-white/5 border border-white/10 rounded-3xl p-6 ">
+                            <h3 className="text-2xl font-semibold">{app.company}</h3>
+                            <p className="text-gray-400 mt-3">{app.role}</p>
+                            <p className="text-purpble-400 mt-3">{app.status}</p>
+                        </div>)
                 })}
             </div>
         </DashboardLayout>
