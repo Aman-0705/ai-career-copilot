@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const applicationRoutes = require("./routes/applicationRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -22,17 +22,17 @@ app.use("/api/auth", authRoutes);
 app.use("/api/ats",atsRoutes);
 app.use("/api/dashboard",dashboardRoutes);
 
-pool.query("SELECT NOW()", (err, res) => {
+// pool.query("SELECT NOW()", (err, res) => {
 
-    if (err) {
-        console.log("Database Connection Error");
-        console.log(err);
-    } else {
-        console.log("Database Connected");
-        console.log(res.rows);
-    }
+//     if (err) {
+//         console.log("Database Connection Error");
+//         console.log(err);
+//     } else {
+//         console.log("Database Connected");
+//         console.log(res.rows);
+//     }
 
-});
+// });
 
 app.listen(PORT, () => {
 
