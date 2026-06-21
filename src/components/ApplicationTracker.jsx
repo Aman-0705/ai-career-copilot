@@ -65,7 +65,7 @@ const ApplicationTracker = () => {
         const token = localStorage.getItem("token");
 
         await fetch(
-            `http://localhost:5000/api/applications/${id}`,
+            `${import.meta.env.VITE_API_URL}/api/applications/${id}`,
             {
                 method: "DELETE",
                 headers: {
@@ -82,7 +82,7 @@ const ApplicationTracker = () => {
         const token = localStorage.getItem("token");
 
         await fetch(
-            `http://localhost:5000/api/applications/${id}`,
+            `${import.meta.env.VITE_API_URL}/api/applications/${id}`,
             {
                 method: "PUT",
                 headers: {
