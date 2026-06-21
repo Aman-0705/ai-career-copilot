@@ -3,7 +3,7 @@ import { useState,useEffect } from "react";
 const BackendTest = () =>{
     const [message, setMessage] = useState("");
     useEffect(()=>{
-        fetch("http://localhost:5000/api/message")
+        fetch(`${import.meta.env.VITE_API_URL}/api/message`)
         .then((response) => response.json())
         .then((data)=>setMessage(data.message))
     },[]);

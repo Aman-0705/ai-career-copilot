@@ -6,7 +6,7 @@ export const fetchDashboardStats =
 
         const response =
             await fetch(
-                "http://localhost:5000/api/dashboard/stats",
+                `${import.meta.env.VITE_API_URL}/api/dashboard/stats`,
                 {
                     headers: {
                         Authorization:

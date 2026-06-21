@@ -3,7 +3,7 @@ import { useState } from "react";
     const [name,setName] = useState("");
     const [reply,setReply] = useState("");
     const handleSubmit = async () =>{
-        const response = await fetch("http://localhost:5000/api/greet",
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/greet`,
             {method: "POST",
             headers:{
                 "Content-Type":"application/json"
