@@ -100,13 +100,13 @@ const ApplicationTracker = () => {
 
     return (
 
-        <div className="relative z-50 max-w-4xl mx-auto py-20 text-white">
+        <div className="max-w-5xl mx-auto py-10 md:py-20 text-white">
 
-            <h2 className="text-4xl font-bold text-center mb-10">
+            <h2 className="text-3xl md:text-5xl font-bold text-center mb-10">
                 Job Application Tracker
             </h2>
 
-            <div className="flex gap-4 mb-8 pt-5">
+            <div className="flex flex-col md:flex-row gap-4 mb-8 pt-5">
 
                 <input
                     type="text"
@@ -139,7 +139,7 @@ const ApplicationTracker = () => {
 
                     <div
                         key={app.id}
-                        className="bg-white/5 border border-white/10 p-6 rounded-2xl"
+                        className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-2xl overflow-hidden"
                     >
 
                         <h3 className="text-2xl font-semibold">
@@ -156,13 +156,13 @@ const ApplicationTracker = () => {
                             Status : {app.status}
                         </p>
 
-                        <div className="flex gap-5 mt-4 justify-center ">
+                        <div className="grid grid-cols-2 md:flex gap-3 mt-6 justify-center">
 
                             <button
                                 onClick={() =>
                                     handleUpdateStatus(app.id, "Interview")
                                 }
-                                className="px-6 py-2 bg-blue-500 rounded-2xl"
+                                className="w-full md:w-auto px-4 py-2 rounded-2xl bg-blue-500"
                             >
                                 Interview
                             </button>
@@ -171,18 +171,18 @@ const ApplicationTracker = () => {
                                 onClick={() =>
                                     handleUpdateStatus(app.id, "Offer")
                                 }
-                                className="px-4 py-2 bg-green-500 rounded-2xl"
+                                className="w-full md:w-auto px-4 py-2 rounded-2xl bg-green-500"
                             >
                                 Offer
                             </button>
 
                             <button onClick={() => handleUpdateStatus(app.id, "Rejected")}
-                                className="px-4 py-2 bg-red-500 rounded-2xl">
+                                className="w-full md:w-auto px-4 py-2 rounded-2xl bg-red-500">
                                 Rejected
                             </button>
 
                             <button onClick={() => handleDeleteApplication(app.id)}
-                                className="px-4 py-2 bg-white text-black rounded-2xl"
+                                className="w-full md:w-auto px-4 py-2 rounded-2xl bg-white text-black"
                             >
                                 Delete
                             </button>

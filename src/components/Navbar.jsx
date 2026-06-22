@@ -15,8 +15,8 @@ const Navbar = () => {
     const isLoggedIn = !!localStorage.getItem("token");
     return (
         <nav className="fixed top-0 left-0 w-full z-50 pt-2">
-            <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between text-center rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg ">
-                <h1 className="text-3xl font-bold tracking-wide cursor-pointer bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between text-center rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg ">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-wide cursor-pointer bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
                     AI Career Copilot
                 </h1>
                 <div className="hidden md:flex gap-8 text-lg text-center items-center">
@@ -112,10 +112,10 @@ const Navbar = () => {
                                 transition={{
                                     duration: 0.3,
                                 }}
-                                className="absolute top-24 left-6 right-6 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col gap-6 text-lg md:hidden">
+                                className="fixed top-[90px] left-4 right-4 z-[999] bg-black/95 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col gap-5 text-lg md:hidden shadow-2xl">
                                 <div className="flex flex-col gap-6">
 
-                                    <Link to="/" className="hover:text-purple-400 transition">
+                                    <Link to="/" className="hover:text-purple-400 transition" onClick={() => SetOpenMenu(false)}>
                                         Home
                                     </Link>
 
@@ -124,6 +124,7 @@ const Navbar = () => {
                                             <Link
                                                 to="/dashboard"
                                                 className="hover:text-purple-400 transition"
+                                                onClick={() => SetOpenMenu(false)}
                                             >
                                                 Dashboard
                                             </Link>
@@ -131,6 +132,7 @@ const Navbar = () => {
                                             <Link
                                                 to="/applications"
                                                 className="hover:text-purple-400 transition"
+                                                onClick={() => SetOpenMenu(false)}
                                             >
                                                 Applications
                                             </Link>
@@ -138,6 +140,7 @@ const Navbar = () => {
                                             <Link
                                                 to="/ats-analyzer"
                                                 className="hover:text-purple-400 transition"
+                                                onClick={() => SetOpenMenu(false)}
                                             >
                                                 Resume Analyzer
                                             </Link>
@@ -145,6 +148,7 @@ const Navbar = () => {
                                             <Link
                                                 to="/ats-history"
                                                 className="hover:text-purple-400 transition"
+                                                onClick={() => SetOpenMenu(false)}
                                             >
                                                 ATS History
                                             </Link>
@@ -161,6 +165,7 @@ const Navbar = () => {
                                             <Link
                                                 to="/login"
                                                 className="hover:text-purple-400 transition"
+                                                onClick={() => SetOpenMenu(false)}
                                             >
                                                 Login
                                             </Link>
@@ -168,6 +173,7 @@ const Navbar = () => {
                                             <Link
                                                 to="/signup"
                                                 className="hover:text-purple-400 transition"
+                                                onClick={() => SetOpenMenu(false)}
                                             >
                                                 Signup
                                             </Link>
