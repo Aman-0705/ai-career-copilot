@@ -6,34 +6,61 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await response.json();
-        console.log(data);
+        try {
 
-        if (data.token) {
+            setLoading(true);
+            setMessage("");
 
-            localStorage.setItem(
-                "token",
-                data.token
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/auth/login`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                }
             );
 
-            navigate("/dashboard");
+            const data = await response.json();
 
-        } else {
+            if (data.token) {
 
-            setMessage(data.message);
+                localStorage.setItem(
+                    "token",
+                    data.token
+                );
+
+                navigate("/dashboard");
+
+            } else {
+
+                setMessage(
+                    data.message || "Login failed"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+            setMessage(
+                "Unable to connect to server"
+            );
+
+        } finally {
+
+            setLoading(false);
 
         }
-
     };
 
     return (
@@ -70,11 +97,34 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
 
-                        <button className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 font-semibold text-lg" onClick={handleLogin}>
-
-                            Login
-
+                        <button
+                            onClick={handleLogin}
+                            disabled={loading}
+                            className={`w-full py-4 rounded-xl font-semibold text-lg transition
+                               ${loading
+                                    ? "bg-gray-600 cursor-not-allowed"
+                                    : "bg-gradient-to-r from-purple-500 to-blue-500 hover:scale-105"
+                                }`}
+                        >
+                            {
+                                loading
+                                    ? "Signing In..."
+                                    : "Login"
+                            }
                         </button>
+                        {
+                            loading && (
+                                <div className="flex flex-col items-center mt-4 gap-3">
+
+                                    <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+
+                                    <p className="text-sm text-gray-400 text-center">
+                                        Connecting to server... First login may take few seconds.
+                                    </p>
+
+                                </div>
+                            )
+                        }
                         {
                             message && (
                                 <p className="text-center mt-4 text-purple-400">
